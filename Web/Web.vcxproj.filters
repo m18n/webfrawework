@@ -1,22 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Исходные файлы">
+    <Filter Include="Network">
+      <UniqueIdentifier>{f6d3aa1d-e3fa-4a96-b3d7-6809d1aff842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\header">
+      <UniqueIdentifier>{4125ec78-a028-4091-a070-5c1d92a2d02e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\cpp">
+      <UniqueIdentifier>{745f1935-a1c5-4bf5-92a1-81fb1a45c815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Файлы заголовков">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Url">
+      <UniqueIdentifier>{ab4b41be-0a41-4583-9d57-89b94b52357c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Url\header">
+      <UniqueIdentifier>{7ead08a9-4b7f-4cbd-808c-9522c3a9d889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Url\cpp">
+      <UniqueIdentifier>{f8379bd8-f3b6-495f-a9cc-61e0f1916796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{24652b54-164f-4d9f-9842-536de04206bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\header">
+      <UniqueIdentifier>{a296fa28-41f0-4151-a76d-dcab8ed2160d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\cpp">
+      <UniqueIdentifier>{c94c3ac9-b5a9-46e6-ad70-73b33b564bba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Network\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Url.cpp">
+      <Filter>Url\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>View\cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Network.h">
+      <Filter>Network\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Url.h">
+      <Filter>Url\header</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>View\header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
