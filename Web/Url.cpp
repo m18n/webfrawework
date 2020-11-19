@@ -13,13 +13,26 @@ void Addurl(urls* urlall, url path) {
 		urlall->url[i] = temp[i];
 	delete[] temp;
 }
+void AddStart(const char* buff, char* cuda, int size) {
+	for (int i = 0; i < size; i++) {
+		cuda[i] = buff[i];
+	}
+}
 void LinkProcessing(urls* urlall, std::string url) {
 	int i = 0;
 	for (i = 0; i < urlall->size; i++) {
 		if (urlall->url[i].url == url)
 			break;
 	}
-	char* file= GetFile(urlall->url[i].view);
-
+	int size = 0;
+	int sizeget = 0;
+	char* file= GetFile(urlall->url[i].view,size,sizeget);
+	char* http = new char[sizeget+1];
+	strcpy(http,"HTTP/1.1 200 OK\r\nContent-length: ");
+	strcat(http,std::to_string(size).c_str());
+	strcat(http, "\r\nContent-Type: text/html\r\n\r\n");
+	AddStart(http,file,sizeget);
+	delete[] http;
+	std::cout << file;
 	delete[] file;
 }

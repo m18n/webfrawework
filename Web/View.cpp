@@ -1,20 +1,35 @@
 #include"View.h"
 using namespace std;
 int GetLength(FILE* fl) {
-	int length= fseek(fl, 0, SEEK_END);
+	fseek(fl, 0, SEEK_END);
+	int length = ftell(fl);
 	fseek(fl, 0, SEEK_SET);
 	return length;
 }
-char* GetFile(View view) {
+int GetLength(int number) {
+	int i = 0;
+	for (; number > 0; i++) {
+		number /= 10;
+	}
+	return i;
+}
+char* GetFile(View view,int& size,int& sizeget) {
 	static char* file;
 	FILE* ptrf;
-	fopen_s(&ptrf,view.namefile.c_str(),"r");
-	file = new char[GetLength(ptrf)];
-	int i = 0;
-	do
-	{
+	fopen_s(&ptrf,"index.html","r");
+	
+	size = GetLength(ptrf)+1;
+	sizeget = HTTP_SIZE+GetLength(size);
+	file = new char[size+sizeget];
+
+	int i = sizeget-1;
+	while (file[i] != EOF) {
+		i++;
 		file[i] = fgetc(ptrf);
-	} while (file[i] != EOF);
+		
+	}
+	file[i] = '\0';
+	size += sizeget;
 	fclose(ptrf);
 	return file;
 }

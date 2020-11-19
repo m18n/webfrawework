@@ -14,3 +14,5 @@ int sendR(SOCKET& socket, const char* buff, int size);
 int recvR(SOCKET& socket, char* buff, int size);
 void Inithilization(Connect& cn, std::string ip, short int port);
 void StartServer(Connect& cn);
+
+void SendFile(SOCKET& socket, char* file, int size);

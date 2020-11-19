@@ -1,4 +1,5 @@
 #include "Network.h"
+//const char http[HTTP_SIZE] = "HTTP/1.1 200 OK\r\nContent-length: \r\nContent-Type: text/html\r\n\r\n";
 int recvR(SOCKET& socket, char* buff, int size) {
 	int res;
 	int i = 0;
@@ -43,6 +44,12 @@ void Inithilization(Connect& cn, std::string ip, short int port) {
 	cn.addr.sin_port = htons(port);
 	cn.addr.sin_family = AF_INET;
 }
+void GetUrl(char* url) {
+
+}
+void Meneger(SOCKET* Connect) {
+
+}
 void StartServer(Connect& cn) {
 	SOCKET sListen = socket(AF_INET, SOCK_STREAM, NULL);
 	bind(sListen, (SOCKADDR*)&cn.addr, sizeof(cn.addr));
@@ -57,6 +64,13 @@ void StartServer(Connect& cn) {
 		else
 			std::cout << "Connect\n";
 
-		/*	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Handle, pl, NULL, NULL);*/
+		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Meneger,&newConnection, NULL, NULL);
 	}
 }
+void CharCut(char* vsavka, char* cude, int start, int size) {
+	for (int i = start; i < size; i++) {
+		cude[i] = vsavka[i - start];
+	}
+}
+//void SendFile(SOCKET& socket, char* file, int size) {
+//}
