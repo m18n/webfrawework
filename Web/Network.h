@@ -10,9 +10,9 @@ struct Connect {
 	SOCKADDR_IN addr;
 	int sizeofaddr = 0;
 };
-int sendR(SOCKET& socket, const char* buff, int size);
-int recvR(SOCKET& socket, char* buff, int size);
+int sendR(SOCKET socket, const char* buff, int size);
+int recvR(SOCKET socket, char* buff, int size);
 void Inithilization(Connect& cn, std::string ip, short int port);
-void StartServer(Connect& cn);
+void StartServer(Connect& cn, urls* url);
 
-void SendFile(SOCKET& socket, char* file, int size);
+//void SendFile(SOCKET& socket, char* file, int size);

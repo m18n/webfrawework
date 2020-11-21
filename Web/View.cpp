@@ -16,7 +16,7 @@ int GetLength(int number) {
 char* GetFile(View view,int& size,int& sizeget) {
 	static char* file;
 	FILE* ptrf;
-	fopen_s(&ptrf,"index.html","r");
+	fopen_s(&ptrf,view.namefile.c_str(),"r");
 	
 	size = GetLength(ptrf)+1;
 	sizeget = HTTP_SIZE+GetLength(size);
