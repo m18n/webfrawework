@@ -13,15 +13,16 @@ int GetLength(int number) {
 	}
 	return i;
 }
-char* GetFile(View view,int& size,int& sizeget) {
+char* GetFile(View view,int& size,int& sizeget, int http) {
 	static char* file;
 	FILE* ptrf;
 	fopen_s(&ptrf,view.namefile.c_str(),"r");
 	
 	size = GetLength(ptrf)+1;
-	sizeget = HTTP_SIZE+GetLength(size);
+	
+	sizeget = http+GetLength(size);
 	file = new char[size+sizeget];
-
+	
 	int i = sizeget-1;
 	while (file[i] != EOF) {
 		i++;
@@ -29,7 +30,33 @@ char* GetFile(View view,int& size,int& sizeget) {
 		
 	}
 	file[i] = '\0';
+	
 	size += sizeget;
 	fclose(ptrf);
+	
 	return file;
+}
+char* GetFile(std::string name, int& size, int& sizeget,int http) {
+	static char* file;
+	FILE* ptrf;
+	fopen_s(&ptrf,name.c_str(), "r");
+	if (ptrf) 
+	{
+		size = GetLength(ptrf) + 1;
+		sizeget = http + GetLength(size);
+		file = new char[size + sizeget];
+		int i = sizeget - 1;
+		while (file[i] != EOF) {
+			i++;
+			file[i] = fgetc(ptrf);
+
+		}
+		file[i] = '\0';
+		size += sizeget;
+		fclose(ptrf);
+		return file;
+	}
+	else {
+		return NULL;
+	}
 }
