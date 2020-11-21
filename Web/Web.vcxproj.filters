@@ -32,6 +32,24 @@
     <Filter Include="View\cpp">
       <UniqueIdentifier>{c94c3ac9-b5a9-46e6-ad70-73b33b564bba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Processing">
+      <UniqueIdentifier>{2ec480df-73c5-41f1-a64f-918b2e4e82b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processing\header">
+      <UniqueIdentifier>{df0fe622-e159-41ab-b991-6fcdb5dd8f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processing\cpp">
+      <UniqueIdentifier>{7fcbb434-90e4-447c-a94c-76bbcba22745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Work-Deadlines">
+      <UniqueIdentifier>{07e9dce6-ba9f-4c01-8651-70d767234be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Work-Deadlines\header">
+      <UniqueIdentifier>{2f1a3d9a-1d51-43e1-8990-43743f3df812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Work-Deadlines\cpp">
+      <UniqueIdentifier>{8f52b1a3-c253-48ef-9539-5d91164ff8ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,6 +64,12 @@
     <ClCompile Include="View.cpp">
       <Filter>View\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="processing.cpp">
+      <Filter>Processing\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="deadlines.cpp">
+      <Filter>Work-Deadlines\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Network.h">
@@ -56,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="View.h">
       <Filter>View\header</Filter>
+    </ClInclude>
+    <ClInclude Include="processing.h">
+      <Filter>Processing\header</Filter>
+    </ClInclude>
+    <ClInclude Include="deadlines.h">
+      <Filter>Work-Deadlines\header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

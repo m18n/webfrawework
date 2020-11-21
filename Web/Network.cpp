@@ -67,57 +67,9 @@ void Inithilization(Connect& cn, std::string ip, short int port) {
 	cn.addr.sin_port = htons(port);
 	cn.addr.sin_family = AF_INET;
 }
-char* GetUrl(char* url,int start) {
-	static char* ch;
-	int i = start;
-	while (url[i] != ' ') {
-		i++;
-	}
-	ch = new char[i-start+1];
-	i = start;
-	while (url[i] != ' ') {
-		ch[i - start] = url[i];
-		i++;
-	}
-	ch[i - start] = '\0';
-	return ch;
-}
-struct ClinetHandler {
-	SOCKET Connect;
-	urls* url;
-};
-void Meneger(ClinetHandler* Connect) {
-	int index = 4;
-	int size = 10000;
-	char* get = new char[size];
-	recvR(Connect->Connect,get,size);
-	std::cout << "GET\n\n" << get << "\n";
-	char* url = GetUrl(get, index);
- 	delete[] get;
-	LinkProcessing(Connect->url,url,Connect->Connect);
-	std::cout << "URL: " << url << "\n\n";
-	delete[] url;
-	delete Connect;
-}
-void StartServer(Connect& cn,urls* url) {
-	SOCKET sListen = socket(AF_INET, SOCK_STREAM, NULL);
-	bind(sListen, (SOCKADDR*)&cn.addr, sizeof(cn.addr));
-	std::cout << "Start Server\n";
-	listen(sListen, SOMAXCONN);
-	SOCKET newConnection;
-	while (true)
-	{
-		newConnection = accept(sListen, (SOCKADDR*)&cn.addr, &cn.sizeofaddr);
-		if (newConnection == 0)
-			std::cout << "Error Connection\n";
-		else
-			std::cout << "Connect\n";
-		ClinetHandler* cl = new ClinetHandler;
-		cl->Connect = newConnection;
-		cl->url = url;
-		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Meneger,cl, NULL, NULL);
-	}
-}
+
+
+
 void CharCut(char* vsavka, char* cude, int start, int size) {
 	for (int i = start; i < size; i++) {
 		cude[i] = vsavka[i - start];

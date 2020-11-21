@@ -12,5 +12,5 @@ struct urls {
 	int size=0;
 };
 void AddUrl(urls* urlall, url path);
-void LinkProcessing(urls* urlall, std::string url, SOCKET sock);
 void DeleteUrls(urls* urle);
+char* GetUrl(char* url, int start);

@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="deadlines.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Network.cpp" />
+    <ClCompile Include="processing.cpp" />
     <ClCompile Include="Url.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="deadlines.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="processing.h" />
     <ClInclude Include="Url.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
