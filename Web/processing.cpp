@@ -33,14 +33,24 @@ void StartServer(Connect& cn, urls* url) {
 		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Meneger, cl, NULL, NULL);
 	}
 }
-
+char* GetRozsher(std::string url,int start) {
+	static char* ret;
+	start++;
+	int size = url.length() - start+1;
+	ret = new char[size];
+	for (int i = start; i < url.length(); i++) {
+		ret[i-start] = url[i];
+	}
+	ret[size-1] = '\0';
+	return ret;
+}
 int CheckFile(std::string url) {
 	for (int i = url.length(); i >= 0; i--) {
 		if (url[i] == '.') {
-			return true;
+			return i;
 		}
 	}
-	return false;
+	return -1;
 }
 void LinkProcessing(urls* urlall, std::string url, SOCKET sock) {
 	int i = 0;
@@ -53,43 +63,71 @@ void LinkProcessing(urls* urlall, std::string url, SOCKET sock) {
 			break;
 		}
 	}
-	if (CheckFile(url)) {
+	int otvet = CheckFile(url);
+	if (otvet!=-1) {
 		int size = 0;
 		int sizeget = 0;
-		char* ur = new char[url.length()];
+		wchar_t* ur = new wchar_t[url.length()];
 		for (int i = 1; i < url.length(); i++) {
 			ur[i - 1] = url[i];
 		}
 		ur[url.length() - 1] = '\0';
-		char* file = GetFile(ur, size, sizeget,HTTP_CSS);
+		char* orzsh = GetRozsher(url, otvet);
+		int sizehttp = 0;
+		bool image = false;
+		if (strcmp(orzsh,"html")==0) {
+			sizehttp = HTML_SIZE;
+		}
+		else if (strcmp(orzsh, "css")==0) {
+			sizehttp = CSS_SIZE;
+		}
+		else {
+			sizehttp = IMAGE_SIZE+strlen(orzsh);
+			image = true;
+		}
+		char* file = GetFile(ur, size, sizeget, sizehttp,image);
+		
 		delete[] ur;
 		if (file != NULL) {
+			
 			char* http = new char[sizeget + 1];
-			strcpy(http, "HTTP/1.1 200 OK\r\nContent-length: ");
-			strcat(http, std::to_string(size - sizeget).c_str());
-			strcat(http, "\r\nContent-Type: text/css\r\n\r\n");
+			if (image == true) {
+				strcpy(http, "HTTP/1.1 200 OK\r\nContent-length: ");
+				strcat(http, std::to_string(size).c_str());
+				strcat(http, "\r\nContent-Type: image/");
+				strcat(http, orzsh);
+				strcat(http, "\r\n\r\n");
+			}
+			else {
+				strcpy(http, "HTTP/1.1 200 OK\r\nContent-length: ");
+				strcat(http, std::to_string(size).c_str());
+				strcat(http, "\r\nContent-Type: text/");
+				strcat(http, orzsh);
+				strcat(http, "\r\n\r\n");
+			}
 			AddStart(http, file, sizeget);
 			delete[] http;
 			std::cout << file;
-			sendR(sock, file, size);
-			delete[] file;
+			sendR(sock, file, size+sizeget);
+			
 		}
-		else {
-			delete[] file;
-		}
+		delete[] file;
+		delete[] orzsh;
 	}
 	if (search == true) {
 		int size = 0;
 		int sizeget = 0;
-		char* file = GetFile(urlall->url[i].view, size, sizeget,HTTP_SIZE);
-		char* http = new char[sizeget+1];
-		strcpy(http, "HTTP/1.1 200 OK\r\nContent-length: ");
-		strcat(http, std::to_string(size-sizeget).c_str());
-		strcat(http, "\r\nContent-Type: text/html\r\n\r\n");
-		AddStart(http, file, sizeget);
-		delete[] http;
-		std::cout << file;
-		sendR(sock, file, size);
+		char* file = GetFile(urlall->url[i].view, size, sizeget,HTML_SIZE);
+		if (file != NULL) {
+			char* http = new char[sizeget + 1];
+			strcpy(http, "HTTP/1.1 200 OK\r\nContent-length: ");
+			strcat(http, std::to_string(size).c_str());
+			strcat(http, "\r\nContent-Type: text/html\r\n\r\n");
+			AddStart(http, file, sizeget);
+			delete[] http;
+			std::cout << file;
+			sendR(sock, file, size + sizeget);
+		}
 		delete[] file;
 	}
 }

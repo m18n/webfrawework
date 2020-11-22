@@ -1,0 +1,39 @@
+html{
+	font-family: Arial;
+
+}
+.card{
+	background-color: #F5F5F5;
+	width: 700px;
+	margin: 10px;
+}
+h2{
+	text-align: center;
+	color: #403880;
+}
+h4{
+	color: #8BA7C2;
+}
+.insides{
+	margin: 10px;
+}
+p{
+	font-size: 14px;
+}
+i{
+	font-size: 10px;
+}
+/*2*/
+.card-game{
+	background-color: #F6F6F6;
+	width: 300px;
+	padding: 10px;
+}
+.red{
+	color:red;
+}
+span{
+	padding: 3px 8px;
+	font-size: 20px;
+	background-color: #E0E0E0;
+}

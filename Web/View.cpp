@@ -16,43 +16,55 @@ int GetLength(int number) {
 char* GetFile(View view,int& size,int& sizeget, int http) {
 	static char* file;
 	FILE* ptrf;
-	fopen_s(&ptrf,view.namefile.c_str(),"r");
+	_wfopen_s(&ptrf,view.namefile.c_str(),L"r");
+	if (ptrf)
+	{
+		size = GetLength(ptrf)+1;
 	
-	size = GetLength(ptrf)+1;
-	
-	sizeget = http+GetLength(size);
-	file = new char[size+sizeget];
-	
-	int i = sizeget-1;
-	while (file[i] != EOF) {
-		i++;
-		file[i] = fgetc(ptrf);
+		sizeget = http+GetLength(size);
+		file = new char[size+sizeget];
+		int otstup = 1;
+		int i = sizeget-1;
+		while (file[i] != EOF) {
+			i++;
+			file[i] = fgetc(ptrf);
+		}
+		file[i] = '\0';
 		
+		int wchars_num = MultiByteToWideChar(CP_UTF8, 0, file, -1, NULL, 0);
+		size = wchars_num - 1-sizeget;
+		fclose(ptrf);
+		return file;
 	}
-	file[i] = '\0';
-	
-	size += sizeget;
-	fclose(ptrf);
-	
-	return file;
+	else {
+		return NULL;
+	}
+
 }
-char* GetFile(std::string name, int& size, int& sizeget,int http) {
+char* GetFile(std::wstring name, int& size, int& sizeget,int http,bool image) {
 	static char* file;
 	FILE* ptrf;
-	fopen_s(&ptrf,name.c_str(), "r");
-	if (ptrf) 
+	_wfopen_s(&ptrf,name.c_str(), L"r");
+	if (ptrf)
 	{
 		size = GetLength(ptrf) + 1;
 		sizeget = http + GetLength(size);
+
 		file = new char[size + sizeget];
 		int i = sizeget - 1;
 		while (file[i] != EOF) {
 			i++;
 			file[i] = fgetc(ptrf);
-
 		}
 		file[i] = '\0';
-		size += sizeget;
+		
+		if (!image) {
+			int wchars_num = MultiByteToWideChar(CP_UTF8, 0, file, -1, NULL, 0);
+			size = wchars_num - 1 - sizeget;
+		}
+		else {
+			cout << file;
+		}
 		fclose(ptrf);
 		return file;
 	}

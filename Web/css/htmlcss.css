@@ -1,0 +1,42 @@
+html{
+	font-family: Arial;
+
+}
+h1{
+	text-align: center;
+}
+.insides{
+	padding: 5px 15px;
+
+}
+.card{
+	margin: 20px;
+	background-color: #F5F5F5;
+}
+code{
+	background-color: #E7E7E7;
+	color:#904367 ;
+}
+.highlight{
+	font-weight: 550;
+	
+}
+h2{
+	text-align: center;
+}
+.textcode{
+	color: black;
+}
+.code{
+	background-color: #E7E7E7;
+	
+}
+.codehtml{
+
+	padding: 10px 30px;
+
+}
+.footer{
+	background-color: #DCDCDC;
+	color: #2BA4B8;
+}
