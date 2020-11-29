@@ -3,14 +3,17 @@
 #include"processing.h"
 
 using namespace std;
-int wmain() {
+const char test[10] = "text/html";
+void Obrobka(const char* url, int size, SOCKET conn) {
+	
+		cout << "\n\nindex.html\n\n";
+		SendHtml(conn, "text/html", 9, "<h1>Hay</h1>", 12);
+}
+int main() {
 	cout << "Start привіт\n";
-	urls* urle=new urls;
 	Connect cn;
 	Inithilization(cn, "192.168.0.103", 9999);
-	
-	StartServer(cn,urle);
-	DeleteUrls(urle);
+	StartServer(cn,Obrobka);
 	cin.get();
 	cin.get();
 	return 0;
