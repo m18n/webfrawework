@@ -10,3 +10,4 @@ struct View
 char* GetFile(View view, int& size, int& sizeget, int http);
 char* GetFile(std::wstring name, int& size, int& sizeget, int http,bool image);
 int GetLength(int number);
+char* GetFile(std::string name, int& size);

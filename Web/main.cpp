@@ -5,9 +5,8 @@
 using namespace std;
 const char test[10] = "text/html";
 void Obrobka(const char* url, int size, SOCKET conn) {
-	
 		cout << "\n\nindex.html\n\n";
-		SendHtml(conn, "text/html", 9, "<h1>Hay</h1>", 12);
+		SendFile("/index.html", conn);
 }
 int main() {
 	cout << "Start привіт\n";

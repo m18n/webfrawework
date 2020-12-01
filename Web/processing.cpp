@@ -1,21 +1,22 @@
 #include"processing.h"
 
-void Meneger(MenC test) {
+void Meneger(SOCKET Connect, void(*link)(const char* link, int sizelink, SOCKET conn)) {
 	int index = 4;
 	int size = 10000;
 	char* get = new char[size];
 	int res = 0;
-	res=recvR(test.Connect, get, size);
+	res=recvR(Connect, get, size);
+	
 	if(res!=-1){
 		std::cout  << get << "\n\n";
 		char* url = GetUrl(get, index);
 		std::cout << "\nURL: " << url << "\n\n";
-		LinkProcessing2(url, test.Connect, test.link);
+		LinkProcessing2(url, Connect, link);
 		delete[] url;
 	}
 	
 	delete[] get;
-	closesocket(test.Connect);
+	closesocket(Connect);
 }
 
 void StartServer(Connect& cn, void(*link)(const char* link, int sizelink, SOCKET conn)) {
@@ -26,15 +27,13 @@ void StartServer(Connect& cn, void(*link)(const char* link, int sizelink, SOCKET
 	SOCKET newConnection;
 	while (true)
 	{
-		newConnection = accept(sListen, (SOCKADDR*)&cn.addr, &cn.sizeofaddr);
+		SOCKET newConnection = accept(sListen, (SOCKADDR*)&cn.addr, &cn.sizeofaddr);
 		if (newConnection == 0)
 			std::cout << "Error Connection\n";
 		else
 			std::cout << "Connect\n";
-		MenC test;
-		test.Connect = newConnection;
-		test.link = link;
-		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Meneger,&test, NULL, NULL);
+		std::thread th(Meneger,newConnection,link);
+		th.detach();
 	}
 }
 char* GetRozsher(std::string url,int start,int& size) {
@@ -70,16 +69,42 @@ void SendHtml(SOCKET conn, const char* format, int sizeformat, const char* html,
 	sendR(conn,http,sizeget+sizehtml);
 	delete[] http;
 }
-void LinkProcessing2(std::string url, SOCKET sock, void(*link)(const char* link, int sizelink, SOCKET conn)) {
-	int otvet = CheckFile(url);
-	if (otvet != -1) {
-		std::cout << "File";
-		SendHtml(sock, "text/html", 9, "test", 4);
-	}
-	else {
-	link(url.c_str(), url.length(), sock);
+void Add(int start, int end, const char* buff, char* cuda) {
+	for (int i = start; i < end; i++) {
+		cuda[i] = buff[i - start];
 	}
 }
+void LinkProcessing2(std::string url, SOCKET sock, void(*link)(const char* link, int sizelink, SOCKET conn)) {
+	int otvet = CheckFile(url);
+	if(otvet==-1)
+		link(url.c_str(), url.length(), sock);
+	else {
+		std::cout << "FILE\n";
+		SendFile(url, sock);
+	}
+}
+void SendFile(std::string url,SOCKET sock) {
+	int size = 0;
+	url = url.substr(1, url.length());
+	char* file = GetFile(url, size);
+	if (file == NULL)
+		SendHtml(sock, "text/html", 9, "error 404", 9);
+	else {
+		int toch = url.find_last_of(".") + 1;
+		int sizerozsh = (url.length() - toch) + 6;
+		char* rozsh = new char[sizerozsh];
+		AddStart("text/", rozsh, 5);
+
+
+		for (int i = toch; i < url.length(); i++) {
+			rozsh[(i - toch) + 5] = url[i];
+		}
+		rozsh[sizerozsh - 1] = '\0';
+		SendHtml(sock, rozsh, sizerozsh - 1, file, size);
+		delete[] rozsh;
+	}
+	delete[] file;
+ }
 //void LinkProcessing(std::string url, SOCKET sock,void(*link)(const char* link,int sizelink,SOCKET conn)) {
 //	int i = 0;
 //	int otvet = CheckFile(url);

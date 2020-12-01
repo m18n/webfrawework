@@ -72,3 +72,28 @@ char* GetFile(std::wstring name, int& size, int& sizeget,int http,bool image) {
 		return NULL;
 	}
 }
+char* GetFile(std::string name, int& size) {
+	static char* file;
+	FILE* ptrf;
+	fopen_s(&ptrf, name.c_str(), "r");
+	if (ptrf)
+	{
+		size = GetLength(ptrf) + 1;
+
+		file = new char[size];
+		int i = -1;
+		while (file[i] != EOF) {
+			i++;
+			file[i] = fgetc(ptrf);
+			
+		}
+		file[i] = '\0';
+		int wchars_num = MultiByteToWideChar(CP_UTF8, 0, file, -1, NULL, 0);
+		size = wchars_num - 1;
+		fclose(ptrf);
+		return file;
+	}
+	else {
+		return NULL;
+	}
+}
